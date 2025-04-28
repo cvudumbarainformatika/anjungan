@@ -5,13 +5,13 @@ import { getLocalToken } from 'src/utility/storrage'
 // const SERV = 'http://192.168.101.79/api.laborat/public'
 // const SERV = 'http://api.laborat.test'
 // const SERV = 'https://xenter.my.id'
-const SERV = 'http://192.168.150.111:3507'
+const SERV = process.env.API
 // const SERV = 'http://192.168.101.80/api.laborat/public'
 // const SERV = 'http://192.168.150.103:3501'
 // const SERV = 'http://localhost/api.laborat/public'
 // const SERV = 'https://rsudmochsaleh.my.id'
 
-const WSHOST = '192.168.150.111'
+const WSHOST = process.env.WSHOST
 // const WSHOST = '192.168.101.80'
 const WSPORT = 6003
 
@@ -47,7 +47,7 @@ const interceptRequest = (config) => {
 }
 api.interceptors.request.use(interceptRequest, interceptReqErrors)
 
-const pathImg = SERV + '/storage/'
+const pathImg = process.env.PATHIMG + '/storage/'
 
 export default boot(({ app }) => {
   app.config.globalProperties.$axios = axios

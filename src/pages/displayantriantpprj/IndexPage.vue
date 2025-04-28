@@ -90,13 +90,13 @@ function listenForSpeechEvents () {
 }
 
 function setSpeech (txt) {
-  // console.log(speech.voiceList[indexVoices.value])
+  console.log('voice terpilih', speech.voiceList[indexVoices.value])
   const voice = speech.utterance
   voice.text = txt
   voice.voice = speech.voiceList[indexVoices.value]
 
   voice.volume = 1
-  voice.pitch = 0.8
+  voice.pitch = 1
   voice.rate = 0.8
 
   return voice

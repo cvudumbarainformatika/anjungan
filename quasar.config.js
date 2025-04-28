@@ -10,7 +10,7 @@
 
 const { configure } = require('quasar/wrappers')
 
-module.exports = configure(function (/* ctx */) {
+module.exports = configure(function (ctx) {
   return {
     eslint: {
       // fix: true,
@@ -65,7 +65,7 @@ module.exports = configure(function (/* ctx */) {
         node: 'node16'
       },
 
-      vueRouterMode: 'history' // available values: 'hash', 'history'
+      vueRouterMode: 'history', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
@@ -75,6 +75,28 @@ module.exports = configure(function (/* ctx */) {
       // publicPath: '/',
       // analyze: true,
       // env: {},
+      env: {
+        // NODE_OPTIONS: '--max-old-space-size=20480',
+        API: ctx?.dev
+          ? 'http://192.168.150.112:3501'
+          // ? 'http://localhost:8080'
+          // : 'http://192.168.150.111:3507',
+          : 'http://192.168.150.112:3501',
+
+        WSHOST: ctx?.dev
+          ? '192.168.150.112'
+          // ? 'localhost'
+          : '192.168.150.112',
+
+        PATHIMG: ctx?.dev
+          // ? 'http://localhost:8000/storage/'
+          ? 'http://192.168.150.111:3507'
+          : 'http://192.168.150.111:3507',
+
+        ENABLE_MONITORING: ctx.dev, // Aktifkan hanya di development
+        MONITORING_LOG: true, // Matikan console log
+        APP_VERSION: JSON.stringify(require('./package.json').version)
+      }
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,
@@ -92,7 +114,11 @@ module.exports = configure(function (/* ctx */) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
       // https: true
+      port: ctx.mode.spa
+        ? 9001
+        : (ctx.mode.pwa ? 9100 : 9200),
       open: true // opens browser window automatically
+
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
