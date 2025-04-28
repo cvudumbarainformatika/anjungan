@@ -2,7 +2,7 @@
 
 import _ from 'lodash'
 
-const globalComponents = import.meta.globEager('components/~global/*.vue')
+const globalComponents = import.meta.glob('components/~global/*.vue', { eager: true })
 
 export default async ({ app }) => {
   Object.entries(globalComponents).forEach(([path, m]) => {
