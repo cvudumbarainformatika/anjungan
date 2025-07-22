@@ -1,5 +1,5 @@
 <template>
-  <div class="row full-width full-height relative-position flex-center items-center" style="overflow: hidden;">
+  <div class="row full-width full-height relative-position flex-center items-center q-pa-none" style="overflow: hidden;">
 
     <div v-for="(item, i) in items" :key="i"  class="col-auto q-pr-md "
       :style="`${items.length === 1 ? 'width:80%; height: 90%;' : 'width:30%; height: 50%'} overflow: hidden;`" >
@@ -12,9 +12,9 @@
             </div>
             <!-- <div class="text-center" :style="`font-size: ${app.txtLg}px; margin-top:-5px;`">{{item?.rs4}}</div> -->
           </div>
-          <div class="col full-height full-width bg-grey-3 text-dark">
+          <div class="col full-height full-width bg-grey-2 text-dark">
             <div class="column flex-center full-height">
-              <div class="" :style="`font-size: ${items.length===1?app.txtXl:app.txtLg}px;`" >Nomor Antrian</div>
+              <div class="" :style="`font-size: ${items.length===1?app.txtXl:app.txtXl}px;`" >Nomor Antrian</div>
               <div class="text-weight-bold" :style="`font-size: ${items.length===1?app.txt140:app.txt70}px; margin-top:-10px`">{{ setNoAntrian(item) }}</div>
             </div>
 

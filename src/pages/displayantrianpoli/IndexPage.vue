@@ -6,7 +6,7 @@
      <div v-else class="fullscreen">
       <BoxAnimation class="absolute" style="z-index: -1;" />
       <AnimationWave class="z--" />
-      <div class="full-height full-width q-pa-md ">
+      <div class="full-height full-width ">
         <DisplayPoliPage :key="queryparam" />
       </div>
      </div>

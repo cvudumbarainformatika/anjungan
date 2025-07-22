@@ -103,7 +103,7 @@ onMounted(() => {
   .video {
     aspect-ratio: 16 / 9;
     width: 100%;
-    position: absolute;
+    // position: absolute;
     // background-color: $primary;
 }
 }

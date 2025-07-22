@@ -1,70 +1,53 @@
 <template>
-  <div class="column full-height full-width">
+  <div class="column fit">
     <!-- <div class="col-auto q-pa-sm opa" >
       <HeaderComp />
     </div> -->
     <div class="col break">
       <div class="row full-height ">
-        <div class="col-auto full-height" style="width:70vw;">
-          <div class="column full-height q-pr-md relative-position" >
-            <div
-                class="square"
-                style="--i:0;"
-              />
-              <div
-                class="square"
-                style="--i:1;"
-              />
-              <div
-                class="square"
-                style="--i:2;"
-              />
-              <div
-                class="square"
-                style="--i:3;"
-              />
-              <div
-                class="square"
-                style="--i:4;"
-              />
-            <div class="col-auto q-pa-sm opa">
+        <div class="col-auto full-height" >
+          <div class="column full-height relative-position"  >
+
+            <div class="col-auto q-pa-none opa">
                <HeaderComp />
             </div>
+            <!-- <div class="col full-height " style="width: 70vw;"> -->
             <div class="col full-height ">
-              <CardcounterComp :items="display.items" />
+              <CardCounterBaru :items="display.items">
+                <template #video>
+                  <VideoComp :videos="video.videos" :loading="video.loading" />
+                </template>
+              </CardCounterBaru>
             </div>
-
           </div>
         </div>
-        <div class="col break q-mb-md relative-position">
+        <!-- <div class="col break q-mb-md relative-position">
           <div class="full-height full-width absolute">
             <div class="column full-height relative-position">
               <div class="col full-height q-pb-md">
                 <WeatherComp />
               </div>
-              <div class="col-auto bg-white relative-position" style="height: 40%;">
-                <VideoComp :videos="video.videos" :loading="video.loading" class="z-top" />
-              </div>
             </div>
-            <!-- <div class="col-auto">
+            <div class="col-auto">
               <VideoComp :videos="video.videos" :loading="video.loading" class="" />
-            </div> -->
+            </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
-    <div class="col-auto  bg-white z-top">
+    <!-- <div class="col-auto bg-white z-top q-mt-sm">
       <BottomPage />
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script setup>
-import WeatherComp from './comp/WeatherComp.vue'
-import BottomPage from './comp/BottomPage.vue'
+// import WeatherComp from './comp/WeatherComp.vue'
+// import BottomPage from './comp/BottomPage.vue'
 import VideoComp from './comp/VideoComp.vue'
 import HeaderComp from './comp/HeaderComp.vue'
-import CardcounterComp from './comp/CardcounterComp.vue'
+// import CardcounterComp from './comp/CardcounterComp.vue'
+import CardCounterBaru from './comp/CardCounterBaru.vue'
 import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useVideoStore } from 'src/stores/video'
@@ -86,23 +69,6 @@ onMounted(() => {
 function subscribedChannel () {
   const kdDisplay = route?.params?.name
   if (kdDisplay) {
-    // const channel = laravelEcho.join('presence.chat.display' + route?.params?.name)
-    // channel.here((users) => {
-    //   // usersOnline.value = [...users]
-    //   console.log(`subscribed display${route?.params?.name} channel`)
-    // })
-    //   .joining((user) => {
-    //     console.log({ user }, 'joined')
-    //   })
-    //   .leaving((user) => {
-    //     console.log({ user }, 'leaving')
-    //   })
-    //   .listen('.chat-message', (e) => {
-    //     console.log('listen', e)
-    //   // const thumb = [...chatMessages.value]
-    //   // if (e.message !== null || e.message !== '') { thumb.push(e.message) }
-    //   // chatMessages.value = thumb
-    //   })
     const channel = laravelEcho.private('private.notif.display' + kdDisplay)
     channel.subscribed(() => {
       console.log(`subscribed private.notif.display${kdDisplay} channel !!!`)
@@ -133,6 +99,7 @@ function subscribedChannel () {
     // background: rgba(255,255,255,0.1);
     animation: animate 10s linear infinite;
     animation-delay: calc(-1s * var(--i));
+    z-index: 0;
   }
 
   @keyframes animate {

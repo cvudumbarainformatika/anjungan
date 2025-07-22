@@ -1,6 +1,6 @@
 <template>
   <div class="row head items-center">
-    <div class="q-mx-md bg--1">
+    <div class="q-mx-md bg--1 col-auto">
       <div class="row items-center">
         <img src="~assets/images/logo-rsud.png" :style="`width:70px; height:70px; border-radius:50%; overflow:hidden;`" class="shadow-4">
         <div class="q-ml-md text-dark">
@@ -22,11 +22,16 @@
           <div style="margin-top:-10px;" class="text-caption">{{ tanggal.toDateString() }}</div>
         </div>
     </div> -->
+
+    <div class="col full-width z-top bg-white ">
+      <BottomPage />
+    </div>
   </div>
 </template>
 
 <script setup>
 import { useAppStore } from 'src/stores/app'
+import BottomPage from './BottomPage.vue'
 // import { ref } from 'vue'
 
 const app = useAppStore()
