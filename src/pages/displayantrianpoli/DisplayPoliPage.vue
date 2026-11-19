@@ -13,7 +13,7 @@
             </div>
             <!-- <div class="col full-height " style="width: 70vw;"> -->
             <div class="col full-height ">
-              <CardCounterBaru :items="display.items">
+              <CardCounterBaru :items="display.items" >
                 <template #video>
                   <VideoComp :videos="video.videos" :loading="video.loading" />
                 </template>

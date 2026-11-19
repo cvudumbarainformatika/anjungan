@@ -39,6 +39,17 @@ const routes = [
       { path: '/display_antrian_tpprj/display', name: 'display_tpprj', component: () => import('pages/displayantriantpprj/IndexPage.vue') }
     ]
   },
+  {
+    path: '/display_tt',
+    component: () => import('layouts/DisplayLayout.vue'),
+    children: [
+      { path: '', name: 'display_tt', component: () => import('pages/displaytt/IndexPage.vue') }
+    ]
+  },
+  {
+    path: '/display_ketersediaan_tt',
+    redirect: '/display_tt'
+  },
   // {
   //   path: '/logout',
   //   component: () => import('layouts/DisplayLayout.vue')

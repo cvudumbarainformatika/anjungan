@@ -9,14 +9,14 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
 import { configure } from 'quasar/wrappers'
-import { fileURLToPath } from 'node:url'
-import { dirname } from 'node:path'
-import path from 'node:path'
+// import { fileURLToPath } from 'node:url'
+// import { dirname } from 'node:path'
+// import path from 'node:path'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+// const __filename = fileURLToPath(import.meta.url)
+// const __dirname = dirname(__filename)
 
-export default configure(async function (ctx) {  // Menambahkan async di sini
+export default configure(async function (ctx) { // Menambahkan async di sini
   return {
     eslint: {
       warnings: true,
@@ -60,8 +60,8 @@ export default configure(async function (ctx) {  // Menambahkan async di sini
           : 'http://192.168.150.111:3507',
 
         ENABLE_MONITORING: ctx.dev,
-        MONITORING_LOG: true,
-        APP_VERSION: JSON.stringify((await import('./package.json', { assert: { type: 'json' } })).default.version)
+        MONITORING_LOG: true
+        // APP_VERSION: JSON.stringify((await import('./package.json', { assert: { type: 'json' } })).default.version)
       }
     },
 

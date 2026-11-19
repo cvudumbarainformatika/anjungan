@@ -8,7 +8,7 @@
     </div>
     <div
       v-for="(item, i) in items"
-      :key="i"
+      :key="item.rs1"
       class="col-4"
     >
       <q-card class="modern-card column no-wrap q-pa-none" style="height: 100%;">
