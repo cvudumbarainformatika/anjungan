@@ -18,7 +18,7 @@
           <q-card class="bg-transparent text-center" flat>
             <q-spinner-dots size="50px" color="cyan-3" />
             <div class="text-subtitle1 text-cyan-2 text-bold q-mt-md">Memuat Data Ketersediaan Tempat Tidur...</div>
-            <div class="text-caption text-grey-5">Menghubungkan ke {{ store.source === 'lokal' ? 'Server Lokal' : 'Server Online' }}</div>
+            <div class="text-caption text-grey-5">Menghubungkan ke Server RSUD ({{ store.apiUrl }})</div>
           </q-card>
         </div>
 
@@ -37,12 +37,6 @@
                 icon="refresh"
                 label="Coba Lagi"
                 @click="store.fetchData"
-              />
-              <q-btn
-                flat
-                color="cyan-3"
-                :label="store.source === 'lokal' ? 'Ganti ke Online' : 'Ganti ke Lokal'"
-                @click="switchSourceAndRetry"
               />
             </div>
           </q-card>
@@ -113,11 +107,6 @@ const cardSize = computed(() => {
   if (count <= 6) return 'md'
   return 'sm'
 })
-
-function switchSourceAndRetry () {
-  const next = store.source === 'lokal' ? 'xenter' : 'lokal'
-  store.setSource(next)
-}
 
 onMounted(() => {
   store.fetchData()

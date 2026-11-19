@@ -34,10 +34,8 @@ export const useKetersediaanTtStore = defineStore('ketersediaan-tt', {
     isError: false,
     errorMessage: '',
     lastUpdated: null,
-    // Sumber endpoint: 'lokal' (api.laborat docker di localhost:8080) atau 'xenter' (https://xenter.my.id)
-    source: 'lokal',
-    localUrl: 'http://localhost:8080',
-    onlineUrl: 'https://xenter.my.id',
+    // Server API SIMRS RSUD
+    apiUrl: 'http://192.168.150.112:3501',
     autoCycleKelas: true,
     autoCycleInterval: Number.isFinite(SAVED_INTERVAL) && SAVED_INTERVAL > 0 ? SAVED_INTERVAL : 12000, // default 12 detik
     refreshInterval: 30000 // refresh data dari server setiap 30 detik
@@ -82,15 +80,6 @@ export const useKetersediaanTtStore = defineStore('ketersediaan-tt', {
   },
 
   actions: {
-    getBaseUrl () {
-      return this.source === 'lokal' ? this.localUrl : this.onlineUrl
-    },
-
-    setSource (source) {
-      this.source = source
-      this.fetchData()
-    },
-
     setKelas (kelas) {
       this.selectedKelas = kelas
     },
@@ -109,12 +98,11 @@ export const useKetersediaanTtStore = defineStore('ketersediaan-tt', {
       this.isError = false
       this.errorMessage = ''
 
-      const baseUrl = this.getBaseUrl()
-      const url = `${baseUrl}/api/v4/cektt/ranap`
+      const url = `${this.apiUrl}/api/v4/cektt/ranap`
 
       try {
         const resp = await axios.get(url, {
-          timeout: 8000,
+          timeout: 10000,
           headers: {
             Accept: 'application/json'
           }
@@ -131,37 +119,12 @@ export const useKetersediaanTtStore = defineStore('ketersediaan-tt', {
           this.kelasList = uniqueKelas
           this.lastUpdated = new Date()
         } else {
-          throw new Error('Respon tidak valid dari server')
+          throw new Error('Respon tidak valid dari server API')
         }
       } catch (err) {
-        console.warn(`Gagal mengambil data dari ${url}:`, err.message)
-
-        // Jika sumber lokal gagal, coba auto fallback ke online
-        if (this.source === 'lokal') {
-          console.info('Mencoba fallback otomatis ke server online xenter.my.id...')
-          try {
-            const fallbackResp = await axios.get(`${this.onlineUrl}/api/v4/cektt/ranap`, {
-              timeout: 8000,
-              headers: { Accept: 'application/json' }
-            })
-            if (fallbackResp.status === 200 && fallbackResp.data) {
-              const list = fallbackResp.data?.tempat_tidur || []
-              const sortedList = normalizeAndSortRooms(list)
-              this.rawList = sortedList
-              this.data = sortedList
-              const uniqueKelas = [...new Set(sortedList.map((item) => item.jenis ?? item.kelas).filter(Boolean))].sort()
-              this.kelasList = uniqueKelas
-              this.lastUpdated = new Date()
-              this.errorMessage = 'Data diambil dari server cadangan (xenter.my.id)'
-              return
-            }
-          } catch (fallbackErr) {
-            console.error('Fallback ke server online juga gagal:', fallbackErr.message)
-          }
-        }
-
+        console.error(`Gagal mengambil data dari ${url}:`, err.message)
         this.isError = true
-        this.errorMessage = err.message || 'Gagal memuat data tempat tidur'
+        this.errorMessage = `Gagal memuat data dari ${this.apiUrl}`
       } finally {
         this.loading = false
       }

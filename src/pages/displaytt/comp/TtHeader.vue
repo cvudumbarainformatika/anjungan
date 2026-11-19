@@ -24,7 +24,7 @@
 
     <!-- Kolom Kanan: Tools & Jam Digital -->
     <div class="row items-center justify-end q-gutter-x-sm no-wrap shrink-0 q-pl-sm">
-      <!-- Icon Wifi Saja (Tanpa Tulisan Teks) -->
+      <!-- Icon Wifi Status Koneksi Server RSUD -->
       <q-btn
         round
         dense
@@ -32,10 +32,10 @@
         :color="store.isError ? 'negative' : 'cyan-3'"
         :icon="store.isError ? 'wifi_off' : 'wifi'"
         class="wifi-btn"
-        @click="toggleSource"
+        @click="store.fetchData"
       >
         <q-tooltip class="bg-dark text-white text-caption">
-          {{ sourceTooltip }} (Klik untuk ganti server)
+          {{ store.isError ? 'Terputus dari 192.168.150.112:3501 (Klik untuk coba lagi)' : 'Terhubung ke Server RSUD (192.168.150.112:3501)' }}
         </q-tooltip>
       </q-btn>
 
@@ -165,13 +165,6 @@ let timer = null
 
 const isFullscreen = computed(() => $q.fullscreen?.isActive)
 
-const sourceTooltip = computed(() => {
-  if (store.source === 'lokal') {
-    return 'Server: Lokal (api.laborat)'
-  }
-  return 'Server: Online (xenter.my.id)'
-})
-
 const cycleSeconds = computed(() => Math.round(store.autoCycleInterval / 1000))
 
 const intervalOptions = [
@@ -196,11 +189,6 @@ function updateClock () {
 
   const options = { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }
   tanggalFormatted.value = now.toLocaleDateString('id-ID', options)
-}
-
-function toggleSource () {
-  const next = store.source === 'lokal' ? 'xenter' : 'lokal'
-  store.setSource(next)
 }
 
 function toggleFullscreen () {
