@@ -22,7 +22,17 @@ function normalizeAndSortRooms (rawList) {
     })
 }
 
-const SAVED_INTERVAL = typeof window !== 'undefined' ? parseInt(localStorage.getItem('display_tt_cycle_interval') || '12000', 10) : 12000
+function getSavedInterval () {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const val = parseInt(window.localStorage.getItem('display_tt_cycle_interval'), 10)
+      if (Number.isFinite(val) && val > 0) return val
+    }
+  } catch (e) {
+    console.warn('localStorage tidak dapat diakses di browser ini:', e)
+  }
+  return 12000
+}
 
 export const useKetersediaanTtStore = defineStore('ketersediaan-tt', {
   state: () => ({
@@ -37,7 +47,7 @@ export const useKetersediaanTtStore = defineStore('ketersediaan-tt', {
     // Server API SIMRS RSUD
     apiUrl: 'http://192.168.150.112:3501',
     autoCycleKelas: true,
-    autoCycleInterval: Number.isFinite(SAVED_INTERVAL) && SAVED_INTERVAL > 0 ? SAVED_INTERVAL : 12000, // default 12 detik
+    autoCycleInterval: getSavedInterval(), // default 12 detik aman
     refreshInterval: 30000 // refresh data dari server setiap 30 detik
   }),
 
@@ -87,7 +97,9 @@ export const useKetersediaanTtStore = defineStore('ketersediaan-tt', {
     setCycleInterval (ms) {
       this.autoCycleInterval = ms
       try {
-        localStorage.setItem('display_tt_cycle_interval', String(ms))
+        if (typeof window !== 'undefined' && window.localStorage) {
+          window.localStorage.setItem('display_tt_cycle_interval', String(ms))
+        }
       } catch (e) {
         console.warn('Gagal menyimpan interval ke localStorage', e)
       }

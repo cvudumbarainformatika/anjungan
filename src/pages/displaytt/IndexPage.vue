@@ -180,6 +180,7 @@ onUnmounted(() => {
 
 /* Animasi Muncul Berurutan (Stagger Waterfall Slide) untuk Masing-Masing Kartu */
 .room-card-wrapper {
+  margin: 6px; /* Fail-safe untuk browser TV lama yang belum support flex gap */
   animation: cardFadeSlide 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) both;
   animation-delay: var(--anim-delay, 0ms);
 }

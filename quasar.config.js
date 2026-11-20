@@ -40,9 +40,19 @@ export default configure(async function (ctx) { // Menambahkan async di sini
 
     build: {
       target: {
-        browser: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
+        browser: ['es2015', 'chrome50', 'edge12', 'firefox50', 'safari10'],
         node: 'node16'
       },
+
+      vitePlugins: [
+        [
+          '@vitejs/plugin-legacy',
+          {
+            targets: ['chrome >= 49', 'edge >= 12', 'firefox >= 52', 'safari >= 10', 'not IE 11'],
+            additionalLegacyPolyfills: ['regenerator-runtime/runtime']
+          }
+        ]
+      ],
 
       vueRouterMode: 'history',
 
