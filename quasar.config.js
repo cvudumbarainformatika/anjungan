@@ -48,8 +48,9 @@ export default configure(async function (ctx) { // Menambahkan async di sini
         [
           '@vitejs/plugin-legacy',
           {
-            targets: ['chrome >= 49', 'edge >= 12', 'firefox >= 52', 'safari >= 10', 'not IE 11'],
-            additionalLegacyPolyfills: ['regenerator-runtime/runtime']
+            targets: ['chrome >= 49', 'edge >= 12', 'firefox >= 52', 'safari >= 9', 'not IE 11'],
+            additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
+            renderModernChunks: false
           }
         ]
       ],
